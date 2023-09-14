@@ -8,6 +8,8 @@ downloadButton.addEventListener('click', () => {
     downloadPDF(base64Pdf, 'file');
 });
 
+downloadButton.href = base64Pdf;
+
 function base64ToArrayBuffer(_base64Str) {
     var binaryString = atob(_base64Str);
     var binaryLen = binaryString.length;
@@ -21,10 +23,14 @@ function base64ToArrayBuffer(_base64Str) {
 
 function downloadPDF(pdf64, name) {
     var byte = base64ToArrayBuffer(pdf64);
-
-    const myFile = new File([byte], 'my-file.pdf', { type: 'application/pdf' });
-
     var blob = new Blob([byte], { type: "application/pdf" });
-
-    window.open(URL.createObjectURL(myFile), "_blank");
+    window.open(URL.createObjectURL(blob), "_blank");
 }
+
+var bytex = base64ToArrayBuffer(base64Pdf);
+let downloadLink = document.createElement('a');
+const text = document.createTextNode("Download Link");
+downloadLink.appendChild(text);
+downloadLink.href = URL.createObjectURL(new Blob([bytex], { type: 'application/pdf' }));
+downloadLink.setAttribute('download', "test.pdf"); 
+document.body.appendChild(downloadLink);
