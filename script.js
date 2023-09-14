@@ -8,11 +8,20 @@ downloadButton.addEventListener('click', () => {
     downloadPDF(base64Pdf, 'file');
 });
 
+function base64ToArrayBuffer(_base64Str) {
+    var binaryString = atob(_base64Str);
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+    for (var i = 0; i < binaryLen; i++) {
+        var ascii = binaryString.charCodeAt(i);
+        bytes[i] = ascii;
+   }
+   return bytes;
+}
+
 function downloadPDF(pdf, name) {
-	const linkSource = `data:application/pdf;base64,${pdf}`;
-	const downloadLink = document.createElement("a");
-	const fileName = `${name}.pdf`;
-	downloadLink.href = linkSource;
-	downloadLink.download = fileName;
-	downloadLink.click();
+	// const linkSource = `data:application/pdf;base64,${pdf}`;
+    var byte = base64ToArrayBuffer(pdf);
+    var blob = new Blob([byte], { type: "application/pdf" });
+    window.open(URL.createObjectURL(blob), "_blank");
 }
