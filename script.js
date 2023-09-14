@@ -22,5 +22,10 @@ function base64ToArrayBuffer(_base64Str) {
 function downloadPDF(pdf, name) {
     var byte = base64ToArrayBuffer(pdf);
     var blob = new Blob([byte], { type: "application/pdf" }, name);
+
+    // Rename blob file
+    blob.lastModifiedDate = new Date();
+    blob.name = name;
+
     window.open(URL.createObjectURL(blob), "_blank");
 }
