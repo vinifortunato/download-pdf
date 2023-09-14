@@ -20,8 +20,7 @@ function base64ToArrayBuffer(_base64Str) {
 }
 
 function downloadPDF(pdf, name) {
-	// const linkSource = `data:application/pdf;base64,${pdf}`;
     var byte = base64ToArrayBuffer(pdf);
-    var blob = new Blob([byte], { type: "application/pdf" });
+    var blob = new Blob([byte], { type: "application/pdf" }, name);
     window.open(URL.createObjectURL(blob), "_blank");
 }
