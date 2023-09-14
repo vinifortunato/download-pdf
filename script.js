@@ -19,13 +19,12 @@ function base64ToArrayBuffer(_base64Str) {
    return bytes;
 }
 
-function downloadPDF(pdf, name) {
-    var byte = base64ToArrayBuffer(pdf);
-    var blob = new Blob([byte], { type: "application/pdf" }, name);
+function downloadPDF(pdf64, name) {
+    var byte = base64ToArrayBuffer(pdf64);
 
-    // Rename blob file
-    blob.lastModifiedDate = new Date();
-    blob.name = name;
+    const myFile = new File([byte], 'my-file.pdf', { type: 'application/pdf' });
 
-    window.open(URL.createObjectURL(blob), "_blank");
+    var blob = new Blob([byte], { type: "application/pdf" });
+
+    window.open(URL.createObjectURL(myFile), "_blank");
 }
